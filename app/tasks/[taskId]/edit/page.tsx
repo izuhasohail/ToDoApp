@@ -1,42 +1,32 @@
-import type { Metadata } from "next"
-import { notFound, redirect } from "next/navigation"
+import type { Metadata } from "next";
+import { notFound, redirect } from "next/navigation";
+import { EditTaskForm } from "@/components/tasks/edit-task-form";
+import { db } from "@/lib/db";
+import { getCurrentUser } from "@/lib/session";
 
-import { EditTaskForm } from "@/components/tasks/edit-task-form"
-import { db } from "@/lib/db"
-import { getCurrentUser } from "@/lib/session"
-import { User } from "@prisma/client"
 export const metadata: Metadata = {
   title: "Edit Task",
   description: "Edit your task",
-}
+};
 
 interface EditTaskPageProps {
-  params: {
-    taskId: string
-  }
+  params: { taskId: string };
 }
 
 export default async function EditTaskPage({ params }: EditTaskPageProps) {
-  const user = await getCurrentUser()
+  const user = await getCurrentUser();
 
   if (!user) {
-    redirect("/login")
-    return
-  }
-
-  if (!user) {
-    redirect("/login")
+    redirect("/login");
+    return;
   }
 
   const task = await db.task.findFirst({
-    where: {
-      id: params.taskId,
-      userId: user.id,
-    },
-  })
+    where: { id: params.taskId, userId: user.id },
+  });
 
   if (!task) {
-    notFound()
+    notFound();
   }
 
   return (
@@ -48,6 +38,5 @@ export default async function EditTaskPage({ params }: EditTaskPageProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }
-
