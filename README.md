@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# To-Do App
+
+This is a **To-Do List** application built with **Next.js**, **TypeScript**, and **Prisma**, featuring authentication, task management, and CRUD operations.
+
+## Features
+- User authentication with **NextAuth.js**
+- Create, Read, Update, Delete (CRUD) tasks
+- Task completion tracking
+- API routes for handling tasks
+- Secure database integration with **Prisma & PostgreSQL**
+- Deployment ready with **Vercel**
+
+## Tech Stack
+- **Frontend:** Next.js (App Router), TypeScript, Tailwind CSS
+- **Backend:** Next.js API Routes, Prisma ORM
+- **Authentication:** NextAuth.js
+- **Database:** PostgreSQL
+- **Deployment:** Vercel
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+- **Node.js** (v18+)
+- **PostgreSQL** (or a cloud database like Supabase)
+
+### Installation
+
+Clone the repository:
 
 ```bash
-npm run dev
+git clone https://github.com/izuhasohail/ToDoApp
+cd ToDoApp
+
+Install dependencies:
+ - npm install
 # or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+ - yarn install
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Environment Variables:
+Create a .env file in the root directory and add the following:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- DATABASE_URL
+- NEXTAUTH_SECRET
+- GOOGLE_CLIENT_ID
+- GOOGLE_CLIENT_SECRET
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+API Routes
+GET /api/tasks/[taskId] → Fetch a single task
+PATCH /api/tasks/[taskId] → Update a task
+DELETE /api/tasks/[taskId] → Delete a task
+POST /api/tasks → Create a new task
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
