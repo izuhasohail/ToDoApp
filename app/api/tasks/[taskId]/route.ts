@@ -4,6 +4,12 @@ import { z } from "zod"
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 
+type RouteParams = {
+  params: {
+    taskId: string
+  }
+}
+
 const taskUpdateSchema = z.object({
   title: z.string().min(1).optional(),
   completed: z.boolean().optional(),
@@ -11,7 +17,7 @@ const taskUpdateSchema = z.object({
 
 export async function PATCH(
   req: NextRequest,
-  context: { params: { taskId: string } }
+  { params }: RouteParams
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -24,7 +30,7 @@ export async function PATCH(
 
     const task = await db.task.findFirst({
       where: {
-        id: context.params.taskId,
+        id: params.taskId,
         userId: session.user?.id,
       },
     })
@@ -35,7 +41,7 @@ export async function PATCH(
 
     const updatedTask = await db.task.update({
       where: {
-        id: context.params.taskId,
+        id: params.taskId,
       },
       data: {
         ...(title !== undefined && { title }),
@@ -56,7 +62,7 @@ export async function PATCH(
 
 export async function DELETE(
   req: NextRequest,
-  context: { params: { taskId: string } }
+  { params }: RouteParams
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -66,7 +72,7 @@ export async function DELETE(
 
     const task = await db.task.findFirst({
       where: {
-        id: context.params.taskId,
+        id: params.taskId,
         userId: session.user?.id,
       },
     })
@@ -77,7 +83,7 @@ export async function DELETE(
 
     await db.task.delete({
       where: {
-        id: context.params.taskId,
+        id: params.taskId,
       },
     })
 
@@ -89,7 +95,7 @@ export async function DELETE(
 
 export async function GET(
   req: NextRequest,
-  context: { params: { taskId: string } }
+  { params }: RouteParams
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -99,7 +105,7 @@ export async function GET(
 
     const task = await db.task.findFirst({
       where: {
-        id: context.params.taskId,
+        id: params.taskId,
         userId: session.user?.id,
       },
     })
