@@ -18,7 +18,6 @@ export default async function EditTaskPage({ params }: EditTaskPageProps) {
 
   if (!user) {
     redirect("/login");
-    return;
   }
 
   const task = await db.task.findFirst({
