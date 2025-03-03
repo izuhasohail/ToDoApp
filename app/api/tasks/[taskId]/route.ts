@@ -4,20 +4,15 @@ import { z } from "zod"
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 
-type RouteParams = {
-  params: {
-    taskId: string
-  }
-}
-
 const taskUpdateSchema = z.object({
   title: z.string().min(1).optional(),
   completed: z.boolean().optional(),
 })
 
-export async function PATCH(
+// PATCH handler
+async function patchHandler(
   req: NextRequest,
-  { params }: RouteParams
+  { params }: { params: { taskId: string } }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -60,9 +55,10 @@ export async function PATCH(
   }
 }
 
-export async function DELETE(
+// DELETE handler
+async function deleteHandler(
   req: NextRequest,
-  { params }: RouteParams
+  { params }: { params: { taskId: string } }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -93,9 +89,10 @@ export async function DELETE(
   }
 }
 
-export async function GET(
+// GET handler
+async function getHandler(
   req: NextRequest,
-  { params }: RouteParams
+  { params }: { params: { taskId: string } }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -119,3 +116,6 @@ export async function GET(
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
   }
 }
+
+// Export handlers
+export { getHandler as GET, patchHandler as PATCH, deleteHandler as DELETE }
