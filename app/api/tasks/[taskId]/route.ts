@@ -12,7 +12,7 @@ const taskUpdateSchema = z.object({
 
 export async function PATCH(req: Request, { params }: { params: { taskId: string } }) {
   try {
-    const session: { user?: { id: string } } | null = await getServerSession(authOptions)
+    const session = await getServerSession(authOptions)
 
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
@@ -56,7 +56,7 @@ export async function PATCH(req: Request, { params }: { params: { taskId: string
 
 export async function DELETE(req: Request, { params }: { params: { taskId: string } }) {
   try {
-    const session: { user?: { id: string } } | null = await getServerSession(authOptions)
+    const session = await getServerSession(authOptions)
 
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
@@ -89,7 +89,7 @@ export async function DELETE(req: Request, { params }: { params: { taskId: strin
 
 export async function GET(req: Request, { params }: { params: { taskId: string } }) {
   try {
-    const session: { user?: { id: string } } | null = await getServerSession(authOptions)
+    const session = await getServerSession(authOptions)
 
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
@@ -111,4 +111,3 @@ export async function GET(req: Request, { params }: { params: { taskId: string }
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
   }
 }
-
