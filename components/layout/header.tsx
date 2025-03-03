@@ -20,22 +20,22 @@ export function Header() {
   const { data: session } = useSession()
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-background">
-      <div className="container flex h-16 items-center justify-between py-4">
+    <header className="sticky top-0 z-50 w-full border-b bg-background shadow-lg backdrop-blur-lg">
+      <div className="container flex h-16 items-center justify-between px-6 py-4 md:px-10">
         <div className="flex gap-6 md:gap-10">
-          <Link href="/" className="flex items-center space-x-2">
-            <span className="hidden font-bold sm:inline-block">Todo App</span>
+          <Link href="/" className="flex items-center space-x-2 text-lg font-semibold transition-colors hover:text-primary">
+            <span className="hidden sm:inline-block">Todo App</span>
           </Link>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
           <ThemeToggle />
           {session?.user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                  <Avatar className="h-8 w-8">
+                <Button variant="ghost" className="relative h-10 w-10 rounded-full overflow-hidden border border-primary shadow-md hover:shadow-lg transition-transform hover:scale-105">
+                  <Avatar className="h-10 w-10">
                     <AvatarImage src={session.user.image || ""} alt={session.user.name || ""} />
-                    <AvatarFallback>
+                    <AvatarFallback className="text-primary bg-muted">
                       {session.user.name
                         ? session.user.name
                             .split(" ")
@@ -46,7 +46,7 @@ export function Header() {
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="end" forceMount>
+              <DropdownMenuContent className="w-56 rounded-lg border border-muted shadow-xl bg-popover" align="end" forceMount>
                 <DropdownMenuItem className="font-normal">
                   <div className="flex flex-col space-y-1">
                     <p className="text-sm font-medium leading-none">{session.user.name}</p>
@@ -55,11 +55,11 @@ export function Header() {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                  <Link href="/dashboard">Dashboard</Link>
+                  <Link href="/dashboard" className="transition-colors hover:text-primary">Dashboard</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
-                  className="cursor-pointer"
+                  className="cursor-pointer transition-colors hover:text-destructive"
                   onSelect={(event) => {
                     event.preventDefault()
                     signOut({
@@ -75,7 +75,7 @@ export function Header() {
             pathname !== "/login" &&
             pathname !== "/register" && (
               <Link href="/login">
-                <Button size="sm">Sign In</Button>
+                <Button size="sm" className="px-4 py-2 text-sm font-medium transition-colors hover:bg-primary/90">Sign In</Button>
               </Link>
             )
           )}
@@ -84,4 +84,3 @@ export function Header() {
     </header>
   )
 }
-

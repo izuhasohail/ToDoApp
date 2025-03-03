@@ -80,103 +80,102 @@ export function RegisterForm() {
   }
 
   return (
-    <Card className="w-full max-w-md mx-auto shadow-lg border-opacity-50">
-      <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl font-bold text-center">Create an account</CardTitle>
-        <CardDescription className="text-center">
-          Enter your details below to create your account
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-foreground">Name</FormLabel>
-                  <FormControl>
-                    <Input 
-                      placeholder="John Doe" 
-                      {...field} 
-                      className="transition-all duration-200 focus:ring-2 focus:ring-offset-1"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-foreground">Email</FormLabel>
-                  <FormControl>
-                    <Input 
-                      placeholder="name@example.com" 
-                      {...field} 
-                      className="transition-all duration-200 focus:ring-2 focus:ring-offset-1"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-foreground">Password</FormLabel>
-                  <FormControl>
-                    <Input 
-                      type="password" 
-                      placeholder="********" 
-                      {...field} 
-                      className="transition-all duration-200 focus:ring-2 focus:ring-offset-1"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button 
-              type="submit" 
-              className="w-full mt-6 transition-all duration-200 hover:shadow-md font-medium"
-              disabled={isLoading}
-            >
-              {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
-              Create Account
-            </Button>
-          </form>
-        </Form>
-        
-        <div className="relative my-6">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t" />
+    <div className="w-full px-4 sm:px-6 flex justify-center items-center">
+      <Card className="w-full max-w-md mx-auto shadow-lg border-opacity-50">
+        <CardHeader className="space-y-1 p-4 sm:p-6">
+          <CardTitle className="text-xl sm:text-2xl font-bold text-center">Create an account</CardTitle>
+          <CardDescription className="text-center text-sm sm:text-base">
+            Enter your details below to create your account
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="p-4 sm:p-6">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 sm:space-y-4">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-foreground text-sm sm:text-base">Name</FormLabel>
+                    <FormControl>
+                      <Input 
+                        placeholder="John Doe" 
+                        {...field} 
+                        className="h-9 sm:h-10 text-sm sm:text-base transition-all duration-200 focus:ring-2 focus:ring-offset-1"
+                      />
+                    </FormControl>
+                    <FormMessage className="text-xs sm:text-sm" />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-foreground text-sm sm:text-base">Email</FormLabel>
+                    <FormControl>
+                      <Input 
+                        placeholder="name@example.com" 
+                        {...field} 
+                        className="h-9 sm:h-10 text-sm sm:text-base transition-all duration-200 focus:ring-2 focus:ring-offset-1"
+                      />
+                    </FormControl>
+                    <FormMessage className="text-xs sm:text-sm" />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-foreground text-sm sm:text-base">Password</FormLabel>
+                    <FormControl>
+                      <Input 
+                        type="password" 
+                        placeholder="********" 
+                        {...field} 
+                        className="h-9 sm:h-10 text-sm sm:text-base transition-all duration-200 focus:ring-2 focus:ring-offset-1"
+                      />
+                    </FormControl>
+                    <FormMessage className="text-xs sm:text-sm" />
+                  </FormItem>
+                )}
+              />
+              <Button 
+                type="submit" 
+                className="w-full mt-4 sm:mt-6 h-9 sm:h-10 text-sm sm:text-base transition-all duration-200 hover:shadow-md font-medium"
+                disabled={isLoading}
+              >
+                {isLoading && <Icons.spinner className="mr-2 h-3 w-3 sm:h-4 sm:w-4 animate-spin" />}
+                Create Account
+              </Button>
+            </form>
+          </Form>
+          
+          <div className="relative my-4 sm:my-6">
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
+            </div>
           </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
-          </div>
-        </div>
-        
-        <Button 
-          variant="outline" 
-          type="button" 
-          onClick={handleGoogleSignIn} 
-          disabled={isGoogleLoading}
-          className="w-full transition-all duration-200 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium"
-        >
-          {isGoogleLoading ? (
-            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <Icons.google className="mr-2 h-4 w-4" />
-          )}{" "}
-          Google
-        </Button>
-      </CardContent>
-    </Card>
+          
+          <Button 
+            variant="outline" 
+            type="button" 
+            onClick={handleGoogleSignIn} 
+            disabled={isGoogleLoading}
+            className="w-full h-9 sm:h-10 text-sm sm:text-base transition-all duration-200 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium"
+          >
+            {isGoogleLoading ? (
+              <Icons.spinner className="mr-2 h-3 w-3 sm:h-4 sm:w-4 animate-spin" />
+            ) : (
+              <Icons.google className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
+            )}{" "}
+            Google
+          </Button>
+        </CardContent>
+      </Card>
+    </div>
   )
 }

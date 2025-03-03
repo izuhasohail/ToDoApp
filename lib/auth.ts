@@ -1,4 +1,3 @@
-// filepath: /e:/to-do-list/lib/auth.ts
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import NextAuth, { type AuthOptions, type Session } from "next-auth"
 import type { Adapter } from "next-auth/adapters"
@@ -92,7 +91,7 @@ export const authOptions: AuthOptions = {
         async jwt({ token, user, account }) {
           console.log("JWT callback", { token, user, account });
           
-          // If this is the first sign-in, keep the user data
+         
           if (user) {
             token.id = user.id;
             token.email = user.email;
@@ -100,7 +99,7 @@ export const authOptions: AuthOptions = {
             token.picture = user.image;
           }
           
-          // For returning users, you can refresh token data from DB if needed
+          
           if (token.email) {
             const dbUser = await db.user.findUnique({
               where: {
