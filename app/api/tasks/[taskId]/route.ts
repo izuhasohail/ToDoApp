@@ -10,7 +10,7 @@ const taskUpdateSchema = z.object({
   completed: z.boolean().optional(),
 })
 
-export async function PATCH(req: NextRequest, { params }: { params: { taskId: string } }) {
+export async function PATCH(req: NextRequest, context: { params: { taskId: string } }) {
   try {
     const session = await getServerSession(authOptions)
     if (!session) {
@@ -21,7 +21,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { taskId: st
     const { title, completed } = taskUpdateSchema.parse(body)
 
     const task = await db.task.findFirst({
-      where: { id: params.taskId, userId: session.user?.id },
+      where: { id: context.params.taskId, userId: session.user?.id },
     })
 
     if (!task) {
@@ -29,7 +29,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { taskId: st
     }
 
     const updatedTask = await db.task.update({
-      where: { id: params.taskId },
+      where: { id: context.params.taskId },
       data: { ...(title !== undefined && { title }), ...(completed !== undefined && { completed }) },
     })
 
@@ -39,7 +39,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { taskId: st
   }
 }
 
-export async function DELETE(req: NextRequest, { params }: { params: { taskId: string } }) {
+export async function DELETE(req: NextRequest, context: { params: { taskId: string } }) {
   try {
     const session = await getServerSession(authOptions)
     if (!session) {
@@ -47,21 +47,21 @@ export async function DELETE(req: NextRequest, { params }: { params: { taskId: s
     }
 
     const task = await db.task.findFirst({
-      where: { id: params.taskId, userId: session.user?.id },
+      where: { id: context.params.taskId, userId: session.user?.id },
     })
 
     if (!task) {
       return NextResponse.json({ error: "Task not found" }, { status: 404 })
     }
 
-    await db.task.delete({ where: { id: params.taskId } })
+    await db.task.delete({ where: { id: context.params.taskId } })
     return NextResponse.json({ success: true })
   } catch (error) {
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
   }
 }
 
-export async function GET(req: NextRequest, { params }: { params: { taskId: string } }) {
+export async function GET(req: NextRequest, context: { params: { taskId: string } }) {
   try {
     const session = await getServerSession(authOptions)
     if (!session) {
@@ -69,7 +69,7 @@ export async function GET(req: NextRequest, { params }: { params: { taskId: stri
     }
 
     const task = await db.task.findFirst({
-      where: { id: params.taskId, userId: session.user?.id },
+      where: { id: context.params.taskId, userId: session.user?.id },
     })
 
     if (!task) {
