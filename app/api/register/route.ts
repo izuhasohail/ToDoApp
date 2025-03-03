@@ -36,7 +36,7 @@ export async function POST(req: Request) {
         name,
         email,
         password: hashedPassword,
-      },
+      } as any,
     })
 
     return NextResponse.json({ user: { name: user.name, email: user.email } }, { status: 201 })
