@@ -1,32 +1,48 @@
-import type { Metadata } from "next";
+"use client";
+
+import { use } from "react";
+import { useRouter } from "next/navigation";
 import { notFound, redirect } from "next/navigation";
 import { EditTaskForm } from "@/components/tasks/edit-task-form";
 import { db } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
+import { useState, useEffect } from "react";
 
-export const metadata: Metadata = {
-  title: "Edit Task",
-  description: "Edit your task",
-};
+type Params = Promise<{ taskId: string }>;
 
-interface EditTaskPageProps {
-  params: { taskId: string };
-}
+export default function EditTaskPage(props: { params: Params }) {
+  const params = use(props.params);
+  const router = useRouter();
 
-export default async function EditTaskPage({ params }: EditTaskPageProps) {
-  const user = await getCurrentUser();
+  const [task, setTask] = useState<{ id: string; title: string } | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  if (!user) {
-    redirect("/login");
-  }
+  useEffect(() => {
+    async function fetchData() {
+      const user = await getCurrentUser();
+      if (!user) {
+        router.push("/login");
+        return;
+      }
 
-  const task = await db.task.findFirst({
-    where: { id: params.taskId, userId: user.id },
-  });
+      const fetchedTask = await db.task.findFirst({
+        where: { id: params.taskId, userId: user.id },
+      });
 
-  if (!task) {
-    notFound();
-  }
+      if (!fetchedTask) {
+        notFound();
+        return;
+      }
+
+      setTask(fetchedTask);
+      setLoading(false);
+    }
+
+    fetchData();
+  }, [params.taskId, router]);
+
+  if (loading) return <p>Loading...</p>;
+  if (!task) return notFound();
 
   return (
     <div className="max-w-4xl mx-auto">
