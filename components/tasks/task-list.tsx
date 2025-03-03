@@ -23,7 +23,7 @@ export async function TaskList() {
       updatedAt: true,
       userId: true,
       completed: true, // Ensure 'completed' is selected
-    },
+    }as any,
   })
 
   if (tasks.length === 0) {
