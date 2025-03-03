@@ -60,10 +60,9 @@ model VerificationToken {
 model Task {
   id        String   @id @default(uuid())
   title     String
-  completed Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  completed Boolean  @default(false)
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
-
