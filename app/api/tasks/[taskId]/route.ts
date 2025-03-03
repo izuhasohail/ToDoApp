@@ -10,10 +10,7 @@ const taskUpdateSchema = z.object({
 })
 
 // PATCH handler
-async function patchHandler(
-  req: NextRequest,
-  { params }: { params: { taskId: string } }
-) {
+async function patchHandler(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions)
     if (!session) {
@@ -22,10 +19,50 @@ async function patchHandler(
 
     const body = await req.json()
     const { title, completed } = taskUpdateSchema.parse(body)
+    const taskId = req.nextUrl.searchParams.get("taskId")
+    if (!taskId) {
+      return NextResponse.json({ error: "Task ID is required" }, { status: 400 })
+    }
+    if (!taskId) {
+      return NextResponse.json({ error: "Task ID is required" }, { status: 400 })
+    }
+    if (!taskId) {
+      return NextResponse.json({ error: "Task ID is required" }, { status: 400 })
+    }
+    if (!taskId) {
+      return NextResponse.json({ error: "Task ID is required" }, { status: 400 })
+    }
+    if (!taskId) {
+      return NextResponse.json({ error: "Task ID is required" }, { status: 400 })
+    }
+    if (!taskId) {
+      return NextResponse.json({ error: "Task ID is required" }, { status: 400 })
+    }
+    if (!taskId) {
+      return NextResponse.json({ error: "Task ID is required" }, { status: 400 })
+    }
+    if (!taskId) {
+      return NextResponse.json({ error: "Task ID is required" }, { status: 400 })
+    }
+    if (!taskId) {
+      return NextResponse.json({ error: "Task ID is required" }, { status: 400 })
+    }
+    if (!taskId) {
+      return NextResponse.json({ error: "Task ID is required" }, { status: 400 })
+    }
+    if (!taskId) {
+      return NextResponse.json({ error: "Task ID is required" }, { status: 400 })
+    }
+    if (!taskId) {
+      return NextResponse.json({ error: "Task ID is required" }, { status: 400 })
+    }
+    if (!taskId) {
+      return NextResponse.json({ error: "Task ID is required" }, { status: 400 })
+    }
 
     const task = await db.task.findFirst({
       where: {
-        id: params.taskId,
+        id: taskId,
         userId: session.user?.id,
       },
     })
@@ -36,7 +73,7 @@ async function patchHandler(
 
     const updatedTask = await db.task.update({
       where: {
-        id: params.taskId,
+        id: taskId,
       },
       data: {
         ...(title !== undefined && { title }),
@@ -56,19 +93,22 @@ async function patchHandler(
 }
 
 // DELETE handler
-async function deleteHandler(
-  req: NextRequest,
-  { params }: { params: { taskId: string } }
-) {
+async function deleteHandler(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions)
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
+    const taskId = req.nextUrl.searchParams.get("taskId")
+    if (!taskId) {
+      return NextResponse.json({ error: "Task ID is required" }, { status: 400 })
+    }
+   
+
     const task = await db.task.findFirst({
       where: {
-        id: params.taskId,
+        id: taskId,
         userId: session.user?.id,
       },
     })
@@ -79,7 +119,7 @@ async function deleteHandler(
 
     await db.task.delete({
       where: {
-        id: params.taskId,
+        id: taskId,
       },
     })
 
@@ -90,19 +130,21 @@ async function deleteHandler(
 }
 
 // GET handler
-async function getHandler(
-  req: NextRequest,
-  { params }: { params: { taskId: string } }
-) {
+async function getHandler(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions)
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
+    const taskId = req.nextUrl.searchParams.get("taskId");
+    if (!taskId) {
+      return NextResponse.json({ error: "Task ID is required" }, { status: 400 })
+    }
+
     const task = await db.task.findFirst({
       where: {
-        id: params.taskId,
+        id: taskId,
         userId: session.user?.id,
       },
     })
