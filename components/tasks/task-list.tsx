@@ -9,7 +9,13 @@ export async function TaskList() {
     return null;
   }
 
-  const tasks: { id: string; title: string; completed: boolean }[] = await db.task.findMany({
+  type Task = {
+    id: string;
+    title: string;
+    completed: boolean;
+  };
+  
+  const tasks: Task[] = await db.task.findMany({
     where: { userId: user.id },
     orderBy: { createdAt: "desc" },
     select: {
