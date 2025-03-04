@@ -18,12 +18,12 @@ export async function TaskList() {
   const tasks: Task[] = await db.task.findMany({
     where: { userId: user.id },
     orderBy: { createdAt: "desc" },
-    // select: {
-    //   completed: true,
-    //   id: true,
-    //   title: true,
+    select: {
+      completed: true,
+      id: true,
+      title: true,
       
-    // },
+    },
   });
 
   if (tasks.length === 0) {
